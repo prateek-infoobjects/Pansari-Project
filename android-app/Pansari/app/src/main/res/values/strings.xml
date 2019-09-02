@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Pansari Promoters</string>
+    <string name="login">Login</string>
+    <string name="went_wrong">Something went wrong!</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="remove_location_updates">Remove Updates</string>
+    <string name="launch_activity">Launch Activity</string>
+    <string name="promoter_primary_details">Promoter \n Primary Details</string>
+    <string name="pansari_title">Pansari</string>
+</resources>

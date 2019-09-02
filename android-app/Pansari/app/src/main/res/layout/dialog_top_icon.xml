@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+
+
+    <RelativeLayout
+        android:id="@+id/dialog_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_rounded_border_red"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/dialog_title1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="Add Item"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dialog_title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_title1"
+            android:layout_marginTop="5dp"
+            android:text="Choose Category"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_title2"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/dialog_title3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/category_spinner"
+            android:layout_marginTop="5dp"
+            android:text="Choose Sub-Category"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        <Spinner
+            android:id="@+id/category_sub_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialog_title3"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/item_name_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/category_sub_spinner"
+            android:layout_marginTop="5dp"
+            android:text="Choose Item"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+        <Spinner
+            android:id="@+id/name_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_name_label"
+            android:gravity="center" />
+
+        <com.pansari.promoter.utils.CustomEdittext
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name_spinner"
+            android:layout_marginTop="5dp"
+            app:hint="Enter Quantity" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/quantity"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.pansari.promoter.utils.AppButton
+                android:id="@+id/yes_logout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                app:text="Add" />
+
+            <com.pansari.promoter.utils.AppButton
+                android:id="@+id/close_logout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yes_logout"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                app:text="Cancel" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

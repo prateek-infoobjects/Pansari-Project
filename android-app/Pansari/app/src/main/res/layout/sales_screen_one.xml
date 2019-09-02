@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/gradient_red"
+        android:gravity="center"
+        android:text="@string/promoter_primary_details"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        android:textStyle="italic" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/date_plantation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.pansari.promoter.utils.CustomEdittext
+                    android:id="@+id/date_created"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hint="Date*"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/date_click"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:src="@drawable/calender_date" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <com.pansari.promoter.utils.CustomEdittext
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hint="Reach Time*"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/time_picker"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:src="@drawable/calender_date" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tree_type_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="5dp"
+                android:text="Zone*"
+                android:textColor="@color/dark_text_color"
+                android:textSize="12sp" />
+
+            <Spinner
+                android:id="@+id/zone_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tree_type_tag"
+                android:minHeight="40dp" />
+
+            <View
+                android:id="@+id/view_spinner_type"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="4dp"
+                android:background="@color/dark_text_color" />
+
+            <com.pansari.promoter.utils.CustomEdittext
+                android:id="@+id/stock_not_available"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:hint="WHICH STOCK NOT AVAILABALE"
+
+                />
+
+            <com.pansari.promoter.utils.CustomEdittext
+                android:id="@+id/stock_short"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:hint="WHICH STOCK SHORT"
+
+                />
+
+            <com.pansari.promoter.utils.AppButton
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="40dp"
+                android:onClick="onNextClick"
+                android:padding="10dp"
+                app:text="NEXT" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
