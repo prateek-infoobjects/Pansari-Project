@@ -20,14 +20,6 @@ async function getStores() {
         });
     },function(error){
       hideLoader()
-      var data = [{storeName : "manish",storeId:12,zone : "zone"}]
-      var stores = $();        
-      data.forEach(function(item, i) {
-        stores = stores.add(storeMethod(item));
-      });
-      $(function() {
-        $('.store').append(stores);
-      });
       console.log("err",error)
     });
 
