@@ -38,7 +38,6 @@
   })(jQuery);
 
   function showLoader() {
-    console.log("tests")
     $('#spinnerContainer').removeClass('hidden');
     $('#spinnerContainer').addClass('visible');
   }

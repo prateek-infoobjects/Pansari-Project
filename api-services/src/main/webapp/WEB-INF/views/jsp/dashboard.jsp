@@ -142,7 +142,7 @@
 											</div>
 
 											<!---Delete Modal-->
-											<div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
+											<!-- <div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
 													<div class="modal-dialog">
 													  <div class="modal-content">
 														<div class="modal-body" id="confirmMessage">
@@ -153,7 +153,10 @@
 															</div>
 													  </div>
 													</div>
-												  </div>
+												  </div> -->
+
+																								<!-- The modal -->
+		
 
 												  <div id="spinnerContainer" class="hidden spinner center">
 													<div class="lds-roller">

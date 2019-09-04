@@ -1,7 +1,13 @@
+var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
+// var fqdn="http://localhost:8080"
+
+
 async function getStores() {
+    //TODO: clear the table here so as not to have duplicate in table after creation
+    var data = []
     showLoader()
     await $.ajax({
-        url: "https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com/stores/listall",
+        url: fqdn+"/stores/listall",
         type: "GET",
         contentType: 'application/json',
         "headers": {
@@ -10,8 +16,8 @@ async function getStores() {
         }
       }).then(function(result) {
         hideLoader()
-        var data = result
-        var stores = $();        
+        data = result
+        var stores = $();
         data.forEach(function(item, i) {
           stores = stores.add(storeMethod(item));
         });
@@ -20,6 +26,15 @@ async function getStores() {
         });
     },function(error){
       hideLoader()
+      data = [{storeId : 1,storeName : "Name",zone : "zone"}]
+      var stores = $();
+
+      data.forEach(function(item, i) {
+        stores = stores.add(storeMethod(item));
+      });
+      $(function() {
+        $('.store').append(stores);
+      });
       console.log("err",error)
     });
 
@@ -41,39 +56,52 @@ getStores()
             storeData.zone,
         '</td>',
         '<td>',
-            '<button id=" '+storeData.storeId+'" onclick="deleteStore(this.id)" class="btn btn-danger btnDel" data-toggle="modal" data-target="#confirm_delete_modal" data-id="',storeData.storeId,'" ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
+            '<button id=" '+storeData.storeId+'"  class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+storeData.storeName+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
         '</td>',
     '</tr>',
   '</tbody>'
     ];
-  
+
     // a jQuery node
     return $(storeTemplate.join(''));
   }
 
+  $(".btnDel").click(function(){ 
+    // this is the value you get which is in data attribute of update button.
+    var btn_value= $(this).data('btn');
+    $('#deleteModal')
+    .find('#deleteStore').val(btn_value).end()                            
+    .modal('show'); 
+});
+
     function createStore(){
+
       showLoader()
       var name = $('#name').val()
       var zone = $('#zone').val()
         $.ajax({
-          url: "https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com/stores/create",
+          url:fqdn+ "/stores/create",
           type: "POST",
-          data:{
+          data:  JSON.stringify({
             "storeName":name,
             "zone":zone
-          },
+          }),
           contentType: 'application/json',
           "headers": {
             "accept": "application/json",
             "Access-Control-Allow-Origin":"*"
           }
         }).then(function(data) {
+          alert("Store added successfully")
           hideLoader()
           $('#myModal').modal('toggle');
+          $('#promtModal').modal('toggle');
           getStores()
       },function(error){
         hideLoader()
         alert(error.statusText)
+        // $('#promtModal').modal('toggle');
+        // $('#modalBody').val(error.statusText)
         console.log("err",error)
       });
     }
@@ -81,9 +109,10 @@ getStores()
     function deleteStore(id){
       showLoader()
         $.ajax({
-          url: "https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com/stores/delete?storeId" + id,
-          type: "DELETE", 
+          url: fqdn+"/stores/delete?storeId=" + id,
+          type: "DELETE",
         }).then(function(data) {
+          alert("Store deleted successfully")
           hideLoader()
           $('#myModal').modal('toggle');
           getStores()
