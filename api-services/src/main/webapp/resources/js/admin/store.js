@@ -79,14 +79,6 @@ getStores()
     $('#deleteStoreName').text(value)
   }
 
-//   $(".btnDel").click(function(){ 
-//     // this is the value you get which is in data attribute of update button.
-//     var btn_value= $(this).data('btn');
-//     $('#deleteModal')
-//     .find('#deleteStore').val(btn_value).end()                            
-//     .modal('show'); 
-// });
-
     function createStore(){
       showLoader()
       var name = $('#name').val()
