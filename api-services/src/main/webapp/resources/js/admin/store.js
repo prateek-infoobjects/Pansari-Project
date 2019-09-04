@@ -26,7 +26,7 @@ async function getStores() {
         });
     },function(error){
       hideLoader()
-      data = [{storeId : 1,storeName : "Name",zone : "zone"}]
+      data = [{storeId : 11,storeName : "Name",zone : "zone"}]
       var stores = $();
 
       data.forEach(function(item, i) {
@@ -56,7 +56,7 @@ getStores()
             storeData.zone,
         '</td>',
         '<td>',
-            '<button id=" '+storeData.storeId+'"  class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+storeData.storeName+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
+            '<button id=" '+storeData.storeId+'" onclick="getId(this.id)" data-id="'+storeData.storeId+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+storeData.storeName+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
         '</td>',
     '</tr>',
   '</tbody>'
@@ -66,16 +66,22 @@ getStores()
     return $(storeTemplate.join(''));
   }
 
-  $(".btnDel").click(function(){ 
-    // this is the value you get which is in data attribute of update button.
-    var btn_value= $(this).data('btn');
-    $('#deleteModal')
-    .find('#deleteStore').val(btn_value).end()                            
-    .modal('show'); 
-});
+  var deleteStoreId
+
+  function getId(id){
+    console.log("id-----",id)
+    deleteStoreId = id
+  }
+
+//   $(".btnDel").click(function(){ 
+//     // this is the value you get which is in data attribute of update button.
+//     var btn_value= $(this).data('btn');
+//     $('#deleteModal')
+//     .find('#deleteStore').val(btn_value).end()                            
+//     .modal('show'); 
+// });
 
     function createStore(){
-
       showLoader()
       var name = $('#name').val()
       var zone = $('#zone').val()
@@ -107,6 +113,7 @@ getStores()
     }
 
     function deleteStore(id){
+      console.log("id--",id)
       showLoader()
         $.ajax({
           url: fqdn+"/stores/delete?storeId=" + id,
