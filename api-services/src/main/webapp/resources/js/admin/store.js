@@ -56,7 +56,7 @@ getStores()
             storeData.zone,
         '</td>',
         '<td>',
-            '<button id=" '+storeData.storeId+'" onclick="getId(this.id)" data-id="'+storeData.storeId+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+storeData.storeName+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
+            '<button id=" '+storeData.storeId+'" onclick="getId(this.id,this.value)"  data-id="'+storeData.storeId+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+storeData.storeName+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
         '</td>',
     '</tr>',
   '</tbody>'
@@ -68,9 +68,9 @@ getStores()
 
   var deleteStoreId
 
-  function getId(id){
-    console.log("id-----",id)
+  function getId(id,value){
     deleteStoreId = id
+    $('#deleteStoreName').text(value)
   }
 
 //   $(".btnDel").click(function(){ 
