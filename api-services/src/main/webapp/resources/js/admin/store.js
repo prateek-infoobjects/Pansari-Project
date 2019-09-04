@@ -3,6 +3,12 @@ var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
 
 
 async function getStores() {
+
+
+  $(".store tr>td").remove();
+
+
+
     //TODO: clear the table here so as not to have duplicate in table after creation
     var data = []
     showLoader()
@@ -101,19 +107,16 @@ getStores()
           alert("Store added successfully")
           hideLoader()
           $('#myModal').modal('toggle');
-          $('#promtModal').modal('toggle');
           getStores()
       },function(error){
         hideLoader()
         alert(error.statusText)
-        // $('#promtModal').modal('toggle');
         // $('#modalBody').val(error.statusText)
         console.log("err",error)
       });
     }
 
     function deleteStore(id){
-      console.log("id--",id)
       showLoader()
         $.ajax({
           url: fqdn+"/stores/delete?storeId=" + id,
@@ -121,11 +124,12 @@ getStores()
         }).then(function(data) {
           alert("Store deleted successfully")
           hideLoader()
-          $('#myModal').modal('toggle');
+          $('#deleteModal').modal('toggle');
           getStores()
       },function(error){
           hideLoader()
           alert(error.statusText)
           console.log("err",error)
+          getStores()
         });
     }
