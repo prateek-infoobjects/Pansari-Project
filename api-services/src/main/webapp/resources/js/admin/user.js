@@ -1,5 +1,5 @@
-var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
-// var fqdn="http://localhost:8080"
+//var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
+var fqdn="http://localhost:8080"
 
 
 async function getUsers() {
@@ -27,15 +27,6 @@ async function getUsers() {
         });
     },function(error){
       hideLoader()
-      data = [{userid : 11,username : "Username",name : "name"}]
-      var users = $();
-
-      data.forEach(function(item, i) {
-        users = users.add(userMethod(item));
-      });
-      $(function() {
-        $('.user').append(users);
-      });
       console.log("err",error)
     });
 
@@ -121,8 +112,7 @@ function userMethod(userData) {
         hideLoader()
         alert(error.statusText)
         console.log("err",error)
+        $('#deleteModal').modal('toggle');
         getUsers()
       });
   }
-
-

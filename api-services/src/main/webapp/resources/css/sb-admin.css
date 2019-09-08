@@ -10577,7 +10577,7 @@ body {
 
 #wrapper #content-wrapper {
   overflow-x: hidden;
-  width: 140%;
+  width: 100%;
   padding-top: 1rem;
   padding-bottom: 80px;
 }

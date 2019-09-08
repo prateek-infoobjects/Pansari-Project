@@ -15,7 +15,7 @@
 							content="Akshay,Hundia,Resume,Akshay Hundia Profile,Akshay Hundia CMU,Hundia Akshay CMU, Hundia Akshay,Akshay Hundia cloud"> --%>
 
 							<title>Pansari Promoters</title>
-							
+
 							<!--Starting here-->
 							<!-- Custom fonts for this template-->
 							<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -27,15 +27,14 @@
 									<link href="resources/css/sb-admin.css" rel="stylesheet">
 										<script data-require="jquery@3.2.1" data-semver="3.2.1" src="resources/vendor/jquery/jquery.m.js"></script>
 										<script data-require="jq-router@*" data-semver="4.3.0" src="resources/vendor/jquery/jq-router.js"></script>
-										<script src="resources/js/admin/store.js"></script>
-
+										
 										<!-- Styles-->
 										<link rel="stylesheet" href="resources/css/styles.css">
 
 											<!--ending here-->
 											<!---Script js-->
 										  <script src="./resources/script.js"></script>
-										  <script type = "text/javascript" 
+										  <script type = "text/javascript"
 										  src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
 									   </script>
 									      <script src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
@@ -115,7 +114,7 @@
 
 											</div>
 											<!-- /# wrapper -->
-											
+
 											<!-- Scroll to Top Button-->
 											<a class="scroll-to-top rounded" href="#page-top">
 												<i class="fas fa-angle-up"></i>
@@ -156,7 +155,7 @@
 												  </div> -->
 
 																								<!-- The modal -->
-		
+
 
 												  <div id="spinnerContainer" class="hidden spinner center">
 													<div class="lds-roller">
@@ -186,7 +185,7 @@
 
 											<!-- Demo scripts for this page-->
 											<script src="resources/js/demo/datatables-demo.js"></script>
-												  
+
 										</body>
 
 									</html>

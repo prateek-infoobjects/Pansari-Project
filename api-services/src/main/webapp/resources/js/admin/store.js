@@ -1,5 +1,5 @@
-var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
-// var fqdn="http://localhost:8080"
+//var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
+var fqdn="http://localhost:8080"
 
 
 async function getStores() {
@@ -32,15 +32,6 @@ async function getStores() {
         });
     },function(error){
       hideLoader()
-      data = [{storeId : 11,storeName : "Name",zone : "zone"}]
-      var stores = $();
-
-      data.forEach(function(item, i) {
-        stores = stores.add(storeMethod(item));
-      });
-      $(function() {
-        $('.store').append(stores);
-      });
       console.log("err",error)
     });
 
@@ -120,6 +111,7 @@ getStores()
           getStores()
       },function(error){
           hideLoader()
+          $('#deleteModal').modal('toggle');
           alert(error.statusText)
           console.log("err",error)
           getStores()
