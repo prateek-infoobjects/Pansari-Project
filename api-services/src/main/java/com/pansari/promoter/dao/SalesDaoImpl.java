@@ -1,15 +1,11 @@
 package com.pansari.promoter.dao;
 
-import com.pansari.promoter.entity.Item;
 import com.pansari.promoter.entity.Sales;
-import com.pansari.promoter.entity.Store;
-import com.pansari.promoter.entity.User;
-import com.pansari.promoter.model.*;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Repository("salesDao")
@@ -25,5 +21,29 @@ public class SalesDaoImpl extends AbstractDao implements SalesDao {
             ex.printStackTrace();
             throw (ex);
         }
+    }
+
+    @Override
+    public List<Sales> fetchSales() {
+        Criteria criteria = getSession().createCriteria(Sales.class);
+
+        criteria.add(Restrictions.eq("selectedDate", "2019-08-01"));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Sales> l = criteria.list();
+        return l;
+    }
+
+    @Override
+    public List<Object[]> fetchSalesByNative(Set<String> dates) {
+        Session session = getSession();
+        SQLQuery query = session.createSQLQuery("" +
+                "select distinct c.name, a.selected_date, b.storename from sales a " +
+                "inner join stores b on a.storeid=b.storeid " +
+                "inner join users c on a.userid=c.userid " +
+                "where a.selected_date IN (:values) order by 2");
+        query.setParameterList("values", dates);
+        System.out.println(query.getQueryString());
+        List<Object[]> rows = query.list();
+        return rows;
     }
 }

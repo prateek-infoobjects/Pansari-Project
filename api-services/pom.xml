@@ -22,11 +22,28 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.9.63</version>
+			<groupId>com.enterprisemath</groupId>
+			<artifactId>em-utils</artifactId>
+			<version>2.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>com.google.appengine</groupId>-->
+<!--			<artifactId>appengine-api-1.0-sdk</artifactId>-->
+<!--			<version>1.9.64</version>-->
+<!--		</dependency>-->
 		<!-- [START servlet] -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

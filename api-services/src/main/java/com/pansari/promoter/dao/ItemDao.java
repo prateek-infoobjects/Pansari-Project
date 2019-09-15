@@ -10,4 +10,7 @@ public interface ItemDao {
 
     Item findById(int itemId);
 
+    Item createItem(String itemName, String primaryCategory, String secondaryCategory);
+
+    void deleteItem(Item item);
 }

@@ -2,6 +2,7 @@ package com.pansari.promoter.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -13,14 +14,19 @@ public class User implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userid;
 
-
     private String username;
-
 
     private String password;
 
-
     private String name;
+
+    //, columnDefinition = "TINYINT"
+    @Column(name="active", nullable = false)
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean active;
+
+    @Column(name="role")
+    private String role;
 
     public User() {
 
@@ -37,7 +43,7 @@ public class User implements java.io.Serializable {
         this.name = name;
     }
 
-    public long getUserid() {
+    public int getUserid() {
         return userid;
     }
 
@@ -70,4 +76,21 @@ public class User implements java.io.Serializable {
         this.name = name;
     }
 
+    @JsonIgnore
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @JsonIgnore
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

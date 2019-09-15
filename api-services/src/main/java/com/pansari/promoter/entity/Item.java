@@ -1,5 +1,8 @@
 package com.pansari.promoter.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +22,20 @@ public class Item  implements java.io.Serializable {
 
     @Column(name="secondarycategory", nullable = false)
     private String secondaryCategory;
+
+    @Column(name = "active", nullable = false)
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean active;
+
+    @JsonIgnore
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 
     public Item(){}
     public Item(int itemId)

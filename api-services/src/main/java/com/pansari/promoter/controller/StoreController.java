@@ -78,8 +78,7 @@ public class StoreController {
         return new ResponseEntity<Store>(store, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public @ResponseBody
     ResponseEntity deleteStore(@RequestParam int storeId) throws CustomException {
         try {

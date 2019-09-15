@@ -27,7 +27,7 @@ async function getItems() {
     },function(error){
       hideLoader();
       data = [{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"}];
-      
+
       var items = $();
       data.forEach(function(item, i) {
         items = items.add(itemMethod(item));
@@ -86,7 +86,7 @@ getItems()
           url:fqdn+ "/items/create",
           type: "POST",
           data:  JSON.stringify({
-            "itemName":name,
+            "itemname":name,
             "primaryCategory" : primaryCategory,
             "secondaryCategory" : secondaryCategory
           }),

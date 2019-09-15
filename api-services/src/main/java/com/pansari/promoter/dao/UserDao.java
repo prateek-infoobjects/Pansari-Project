@@ -12,5 +12,9 @@ public interface UserDao {
 
     User getUserById(int userid);
 
+    int createUser(String name, String username, String password);
+
+    void deleteUser(User user);
+
 }
 

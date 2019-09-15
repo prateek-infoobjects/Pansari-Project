@@ -19,6 +19,7 @@ public class StoreDaoImpl extends AbstractDao implements StoreDao {
     @Override
     public List<Store> listStoresByZone(String zone) {
         Criteria criteria = getSession().createCriteria(Store.class);
+        criteria.add(Restrictions.eq("active",true));
         criteria.add(Restrictions.eq("zone", zone));
         List<Store> l = criteria.list();
         return l;
@@ -45,6 +46,7 @@ public class StoreDaoImpl extends AbstractDao implements StoreDao {
     @Override
     public List<Store> getStores() {
         Criteria criteria = getSession().createCriteria(Store.class);
+        criteria.add(Restrictions.eq("active",true));
         List<Store> l = criteria.list();
         return l;
     }
@@ -57,6 +59,7 @@ public class StoreDaoImpl extends AbstractDao implements StoreDao {
             store = new Store();
             store.setStorename(storeName);
             store.setZone(zone.toUpperCase());
+            store.setActive(true);
             session.save(store);
         } catch (HibernateException ex) {
             ex.printStackTrace();
@@ -69,7 +72,7 @@ public class StoreDaoImpl extends AbstractDao implements StoreDao {
     public void deleteStore(Store store) {
         Session session = getSession();
         try {
-            session.delete(store);
+            session.update(store);
         } catch (HibernateException ex) {
             ex.printStackTrace();
             throw (ex);

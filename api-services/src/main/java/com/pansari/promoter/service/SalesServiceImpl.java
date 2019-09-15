@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Service("salesService")
@@ -32,6 +30,8 @@ public class SalesServiceImpl implements SalesService {
 
     @Autowired
     private ItemDao itemDao;
+
+
 
     @Override
     @Transactional
@@ -88,6 +88,18 @@ public class SalesServiceImpl implements SalesService {
             throw e;
         }
 
+    }
+
+    @Override
+    @Transactional
+    public List<Sales> getSalesByDates() {
+        List<Sales> sales = salesDao.fetchSales();
+        return sales;
+    }
+
+    @Transactional
+    public List<Object[]> getSalesByDatesNatively(Set<String> dates) {
+        return salesDao.fetchSalesByNative(dates);
     }
 
 

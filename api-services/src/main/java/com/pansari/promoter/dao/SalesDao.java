@@ -1,12 +1,16 @@
 package com.pansari.promoter.dao;
 
 import com.pansari.promoter.entity.Sales;
-import com.pansari.promoter.model.SalesDto;
-import com.pansari.promoter.entity.Store;
-import com.pansari.promoter.entity.User;
+
+import java.util.List;
+import java.util.Set;
 
 public interface SalesDao {
 
  void createSale(Sales sale);
+
+ List<Sales> fetchSales();
+
+ List<Object[]> fetchSalesByNative(Set<String> dates);
 
 }

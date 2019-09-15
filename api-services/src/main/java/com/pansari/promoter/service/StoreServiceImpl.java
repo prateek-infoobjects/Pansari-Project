@@ -56,6 +56,7 @@ public class StoreServiceImpl implements StoreService {
             logger.warning("Store doesn't exists");
             throw new CustomException(400, "Wrong store id received");
         }
+        store.setActive(false);
         storeDao.deleteStore(store);
     }
 }
