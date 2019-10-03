@@ -9455,6 +9455,7 @@
 	
 		return resolved.replace( '%d', plural ); // nb: plural might be undefined,
 	} );
+
 	/**
 	 * Version string for plug-ins to check compatibility. Allowed format is
 	 * `a.b.c-d` where: a:int, b:int, c:int, d:string(dev|beta|alpha). `d` is used
@@ -15291,6 +15292,7 @@
 	 *  @param {int} column Column index
 	 *  @param {bool} vis `false` if column now hidden, or `true` if visible
 	 */
+	$.fn.dataTable.ext.errMode = 'none'
 
 	return $.fn.dataTable;
 }));

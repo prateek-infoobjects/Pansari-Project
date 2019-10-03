@@ -1,7 +1,6 @@
 //var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
 var fqdn="http://localhost:8080"
 
-
 async function getUsers() {
   $(".user tr>td").remove();
     //TODO: clear the table here so as not to have duplicate in table after creation
@@ -22,13 +21,15 @@ async function getUsers() {
         data.forEach(function(item, i) {
           users = users.add(userMethod(item));
         });
+        $("#user_table_id tbody").empty();
         $(function() {
-          $('.user').append(users);
+          $('#tbody').append(users);
         });
     },function(error){
       hideLoader()
       console.log("err",error)
     });
+    $('#user_table_id').DataTable();
 
 }
 getUsers()
@@ -37,7 +38,6 @@ getUsers()
 function userMethod(userData) {
     var userTemplate = [
 
-    '<tbody>',
     '<tr>',
         '<td>',
             userData.userid,
@@ -52,7 +52,6 @@ function userMethod(userData) {
             '<button id=" '+userData.userid+'" onclick="getId(this.id,this.value)"  data-id="'+userData.userid+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+userData.username+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
         '</td>',
     '</tr>',
-  '</tbody>'
     ];
 
     // a jQuery node
@@ -116,3 +115,8 @@ function userMethod(userData) {
         getUsers()
       });
   }
+
+  $(document).ready( function () {
+    $('#user_table_id tbody').DataTable();
+    $("#user_table_id").ajax.reload();
+  } );

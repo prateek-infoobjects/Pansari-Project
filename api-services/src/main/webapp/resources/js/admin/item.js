@@ -21,22 +21,26 @@ async function getItems() {
         data.forEach(function(item, i) {
           items = items.add(itemMethod(item));
         });
+        $("#item_table_id tbody").empty();
         $(function() {
-          $('.item').append(items);
+          $('#tbody').append(items);
         });
     },function(error){
       hideLoader();
-      data = [{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"}];
+      data = [{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"},{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"},{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"}];
 
       var items = $();
       data.forEach(function(item, i) {
         items = items.add(itemMethod(item));
       });
+      $("#item_table_id tbody").empty();
       $(function() {
-        $('.item').append(items);
+        $('#tbody').append(items);
       });
       console.log("err",error);
     });
+    $('#item_table_id').DataTable();
+
 
 }
 getItems()
@@ -44,7 +48,6 @@ getItems()
  function itemMethod(itemData) {
     var itemTemplate = [
 
-    '<tbody>',
     '<tr>',
         '<td>',
             itemData.itemId,
@@ -62,7 +65,6 @@ getItems()
             '<button id=" '+itemData.itemId+'" onclick="getId(this.id,this.value)"  data-id="'+itemData.itemId+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+itemData.itemName+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
         '</td>',
     '</tr>',
-  '</tbody>'
     ];
 
     // a jQuery node
@@ -126,3 +128,9 @@ getItems()
           getItems()
         });
     }
+
+
+  $(document).ready( function () {
+    $('#item_table_id tbody').DataTable();
+    $("#item_table_id").ajax.reload();
+  } );

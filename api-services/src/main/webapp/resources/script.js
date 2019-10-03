@@ -28,6 +28,21 @@
       templateUrl: 'resources/views/admin/locationreading.html',
     };
 
+    routes['register'] = {
+      url: '#/register',
+      templateUrl: 'resources/views/admin/register.html',
+    };
+
+    routes['login'] = {
+      url: '#/login',
+      templateUrl: 'resources/views/admin/login.html',
+    };
+
+    routes['store'] = {
+      url: '#/store',
+      templateUrl: 'resources/views/admin/store.html',
+    };
+
 
     $.router.setData(routes).setDefault(defaultRoute);
 
@@ -46,3 +61,5 @@
     $('#spinnerContainer').removeClass('visible');
     $('#spinnerContainer').addClass('hidden');
   }
+
+  	

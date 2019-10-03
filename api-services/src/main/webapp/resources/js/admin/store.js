@@ -1,14 +1,8 @@
 //var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
 var fqdn="http://localhost:8080"
 
-
 async function getStores() {
-
-
   $(".store tr>td").remove();
-
-
-
     //TODO: clear the table here so as not to have duplicate in table after creation
     var data = []
     showLoader()
@@ -20,20 +14,34 @@ async function getStores() {
           "accept": "application/json",
           "Access-Control-Allow-Origin":"*"
         }
-      }).then(function(result) {
+      }
+      
+      ).then(function(result) {
         hideLoader()
         data = result
         var stores = $();
         data.forEach(function(item, i) {
           stores = stores.add(storeMethod(item));
         });
+        $("#store_table_id tbody").empty();
         $(function() {
-          $('.store').append(stores);
+          $('#tbody').append(stores);
         });
+
     },function(error){
       hideLoader()
-      console.log("err",error)
+      data = [{storeId : 111,storeName : "Ios",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"}];
+
+      var stores = $();
+      data.forEach(function(store, i) {
+        stores = stores.add(storeMethod(store));
+      });
+      $("#store_table_id tbody").empty();
+      $(function() {
+        $('#tbody').append(stores);
+      });
     });
+    $('#store_table_id').DataTable();
 
 }
 getStores()
@@ -41,7 +49,6 @@ getStores()
  function storeMethod(storeData) {
     var storeTemplate = [
 
-    '<tbody>',
     '<tr>',
         '<td>',
             storeData.storeId,
@@ -56,7 +63,6 @@ getStores()
             '<button id=" '+storeData.storeId+'" onclick="getId(this.id,this.value)"  data-id="'+storeData.storeId+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+storeData.storeName+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
         '</td>',
     '</tr>',
-  '</tbody>'
     ];
 
     // a jQuery node
@@ -117,3 +123,8 @@ getStores()
           getStores()
         });
     }
+
+    $(document).ready( function () {
+      $('#store_table_id tbody').DataTable();
+      $("#store_table_id").ajax.reload();
+    } );

@@ -1,4 +1,7 @@
 <script src="resources/js/admin/store.js"></script>
+<script src="resources/vendor/datatables/jquery.dataTables.js"></script>
+<script src="resources/vendor/datatables/dataTables.bootstrap4.js"></script>
+	
 <div id="content-wrapper">
 
   <div class="container-fluid">
@@ -8,9 +11,30 @@
       <li class="breadcrumb-item">
         <a href="#/store">Store</a>
       </li>
-      <!-- <li class="breadcrumb-item active">User</li> -->
     </ol>
-
+    
+  <!-- <table id="store_table_id" class="display">
+      <thead>
+          <tr>
+              <th>Column 1</th>
+              <th>Column 2</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>Row 1 Datasss 1</td>
+              <td>Row 1 Data 2</td>
+          </tr>
+          <tr>
+              <td>Row 2 Data 1</td>
+              <td>Row 2 Data 2</td>
+          </tr>
+             <tr>
+              <td>Row 2 Data 1</td>
+              <td>Row 2 Data 2</td>
+          </tr>
+      </tbody>
+  </table> -->
     <!-- DataTables Example -->
     <div class="card mb-3">
       <div class="card-header">
@@ -22,8 +46,8 @@
             </button>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered store" id="dataTable" width="100%" cellspacing="0">
+        <!-- <div class="table-responsive"> -->
+          <table  id="store_table_id" class="display store" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>Id</th>
@@ -32,8 +56,11 @@
                 <th>Action</th>
               </tr>
             </thead>
+            <tbody id="tbody">
+
+            </tbody>
           </table>
-        </div>
+        <!-- </div> -->
       </div>
       <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
     </div>
@@ -95,6 +122,8 @@
             </div>
           </div>
   </div>
+
+
   <!-- /.container-fluid -->
 
 
