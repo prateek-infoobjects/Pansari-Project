@@ -3,10 +3,8 @@ package com.pansari.promoter.controller;
 import com.pansari.promoter.entity.Store;
 import com.pansari.promoter.exceptions.CustomException;
 import com.pansari.promoter.exceptions.UserNotFoundException;
-import com.pansari.promoter.model.LoginDto;
+import com.pansari.promoter.model.*;
 import com.pansari.promoter.entity.User;
-import com.pansari.promoter.model.StoreDto;
-import com.pansari.promoter.model.UserDto;
 import com.pansari.promoter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,13 +59,46 @@ public class UserController {
         }
         int userId;
         try {
-            userId = userService.createUser(userDto.getName().trim(), userDto.getUsername().trim(), userDto.getPassword().trim());
+            userId = userService.createUser(userDto.getName().trim(), userDto.getUsername().trim(), userDto.getPassword().trim(), userDto.getStoreid());
             logger.info("User with name - " +userDto.getName().trim() + " created with id - "+ userId);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<CustomException>(new CustomException(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CustomException>(new CustomException(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Integer>(userId, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity updateUser(@RequestBody UserUpdateDto userUpdateDto) throws CustomException {
+        if (userUpdateDto.getUsername().isEmpty() || userUpdateDto.getName().isEmpty() || userUpdateDto.getPassword().isEmpty()) {
+            logger.severe("Name/username/password is invalid");
+            return new ResponseEntity<CustomException>(new CustomException("Name/username/password is invalid"), HttpStatus.BAD_REQUEST);
+        }
+        int userId;
+        try {
+            userId = userService.updateUser(userUpdateDto.getUserid(), userUpdateDto.getName(),
+                    userUpdateDto.getUsername(), userUpdateDto.getPassword(), userUpdateDto.getStoreid());
+            logger.info("User with name - " +userUpdateDto.getName().trim() + " updated for id - "+ userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<CustomException>(new CustomException(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Integer>(userId, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/updatestore", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity updateStoreForUser(@RequestBody UserUpdateStoreDto userUpdateStoreDto) throws CustomException {
+        User user;
+        try {
+            user = userService.updateStoreForUser(userUpdateStoreDto.getUserid(), userUpdateStoreDto.getStoreid());
+            logger.info("User with name - " +user.getName().trim() + " updated for store with id - "+ user.getStore().getStoreId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<CustomException>(new CustomException(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Integer>(user.getUserid(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/delete", method = RequestMethod.DELETE)

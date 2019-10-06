@@ -15,10 +15,11 @@ import java.util.List;
 public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public User authenticateUser(String username, String password) {
-        System.out.println("username = [" + username + "], password = [" + password + "]");
         Criteria criteria = getSession().createCriteria(User.class);
-        criteria.add(Restrictions.eq("username",username));
+        criteria.add(Restrictions.eq("username",username).ignoreCase());
         criteria.add(Restrictions.eq("password",password));
+        criteria.add(Restrictions.eq("active",true));
+        criteria.add(Restrictions.eq("role",Roles.USER.toString()));
         return (User) criteria.uniqueResult();
     }
 
@@ -39,7 +40,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public int createUser(String name, String username, String password) {
+    public int createUser(String name, String username, String password, Store store) {
         Session session = getSession();
         User user = new User();
         user.setName(name);
@@ -47,6 +48,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         user.setPassword(password);
         user.setActive(true);
         user.setRole(Roles.USER.toString());
+        user.setStore(store);
         try
         {
             session.save(user);
@@ -68,4 +70,34 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             throw (ex);
         }
     }
+
+    @Override
+    public int updateUser(User user, String name, String username, String password, Store store) {
+        Session session = getSession();
+        user.setName(name);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setStore(store);
+        try{
+            session.update(user);
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            throw (ex);
+        }
+        return user.getUserid();
+    }
+
+    @Override
+    public User updateStoreForUser(User user, Store store) {
+        Session session = getSession();
+        user.setStore(store);
+        try{
+            session.update(user);
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            throw (ex);
+        }
+        return user;
+    }
+
 }

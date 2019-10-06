@@ -1,5 +1,7 @@
 package com.pansari.promoter.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,8 +15,11 @@ public class LocationReading {
     private double latitude;
     private double longitude;
     private long received;
+    @JsonIgnore
     private long created;
+    @JsonIgnore
     private long modified;
+    @JsonIgnore
     private String datestamp;
 
     public long getLocationreadingid() {

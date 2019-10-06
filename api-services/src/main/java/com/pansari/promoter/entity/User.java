@@ -28,9 +28,14 @@ public class User implements java.io.Serializable {
     @Column(name="role")
     private String role;
 
+    @OneToOne()
+    @JoinColumn(name = "storeid")
+    private Store store;
+
     public User() {
 
     }
+
 
     public User(int userid, String userName) {
         this.userid = userid;
@@ -41,6 +46,14 @@ public class User implements java.io.Serializable {
         this.userid = userid;
         this.username = userName;
         this.name = name;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     public int getUserid() {
