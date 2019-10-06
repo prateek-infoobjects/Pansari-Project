@@ -30,16 +30,7 @@ async function getStores() {
 
     },function(error){
       hideLoader()
-      data = [{storeId : 111,storeName : "Ios",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 111,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"},{storeId : 123,storeName : "Iphone",zone :"Smart Phone"}];
-
-      var stores = $();
-      data.forEach(function(store, i) {
-        stores = stores.add(storeMethod(store));
-      });
-      $("#store_table_id tbody").empty();
-      $(function() {
-        $('#tbody').append(stores);
-      });
+      console.log("error",error)
     });
     $('#store_table_id').DataTable();
 

@@ -27,21 +27,9 @@ async function getItems() {
         });
     },function(error){
       hideLoader();
-      data = [{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"},{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"},{itemId : 123,itemName : "Iphone",primaryCategory : "Mobile Phone", secondaryCategory :"Smart Phone"}];
-
-      var items = $();
-      data.forEach(function(item, i) {
-        items = items.add(itemMethod(item));
-      });
-      $("#item_table_id tbody").empty();
-      $(function() {
-        $('#tbody').append(items);
-      });
       console.log("err",error);
     });
     $('#item_table_id').DataTable();
-
-
 }
 getItems()
 

@@ -27,15 +27,6 @@ async function getUsers() {
         });
     },function(error){
       hideLoader()
-      data = [{userid : 1,name : "Raghav",username : "raghav",store :{storeName : "test",zone : "zone"}}]
-      var users = $();
-      data.forEach(function(item, i) {
-        users = users.add(userMethod(item));
-      });
-      $("#user_table_id tbody").empty();
-      $(function() {
-        $('#tbody').append(users);
-      });
       console.log("err",error)
     });
     $('#user_table_id').DataTable();
@@ -93,7 +84,6 @@ function userMethod(userData) {
 
   function getZones(){
     showLoader()
-    console.log("test")
     $(".zone").remove();
     $.ajax({
         url:fqdn+ "/stores/getzones",
@@ -115,16 +105,7 @@ function userMethod(userData) {
         $(select).val(data[1]);
     },function(error){
       hideLoader()
-      data = [12,23,4,5,6,6]
-      // Get select
-      var select = document.getElementById('zoneSelect');
-      // Add options
-      for (var i in data) {
-        $(select).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
-      }
-      // Set selected value
-      $(select).val(data[1]);
-      // alert(error.statusText)
+      alert(error.statusText)
       console.log("err",error)
     });
   }
@@ -146,36 +127,13 @@ function userMethod(userData) {
         var select = document.getElementById('storeSelect');
         // Add options
         for (var i in data) {
-          $(select).append('<option class="store" value=' + data[i] + '>' + data[i] + '</option>');
+          $(select).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
         }
         // Set selected value
         $(select).val(data[1]);
     },function(error){
       hideLoader()
-      data = [{
-        "storeId": 48,
-        "storeName": "WEEKLY OFF",
-        "zone": "NORTH-DELHI"
-    },
-    {
-        "storeId": 49,
-        "storeName": "AGGARWAL BACHAT BAZAAR",
-        "zone": "NORTH-DELHI"
-    },
-    {
-        "storeId": 50,
-        "storeName": "APNA STORE- MANGOLPURI",
-        "zone": "NORTH-DELHI"
-    }]
-      // Get select
-      var select = document.getElementById('storeSelect');
-      // Add options
-      for (var i in data) {
-        $(select).append('<option class="store"  value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
-      }
-      // Set selected value
-      $(select).val(data[1]);
-      // alert(error.statusText)
+      alert(error.statusText)
       console.log("err",error)
     });
   }
