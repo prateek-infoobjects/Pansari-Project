@@ -5,7 +5,6 @@ public class UserUpdateDto {
 
     private int userid;
     private String username;
-    private String password;
     private String name;
     private int storeid;
 
@@ -40,14 +39,6 @@ public class UserUpdateDto {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 

@@ -18,9 +18,9 @@
     <div class="card mb-3">
       <div class="card-header">
         <span class="fontSize"><i class="fas fa-table"></i>
-          Data</span> 
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal" onclick="getZones()">
-              <i class="fa fa-plus" aria-hidden="true"></i> 
+          Data</span>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#createUserModal" onclick="getZones()">
+              <i class="fa fa-plus" aria-hidden="true"></i>
               Add
             </button>
       </div>
@@ -34,7 +34,7 @@
                 <th>Username</th>
                 <th>Store Name</th>
                 <th>Zone</th>
-                <th>Change Store</th>
+                <th>Update user</th>
                 <th>Delete User</th>
               </tr>
             </thead>
@@ -47,9 +47,9 @@
     </div>
 
     <!--Add Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="createUserModal" role="dialog">
         <div class="modal-dialog">
-        
+
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Add New User</h4>
@@ -62,32 +62,32 @@
                   <div class="form-group displayForm">
                     <label class="control-label label-margin col-sm-2" for="Name">Name: </label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="name" placeholder="Enter name">
+                      <input type="text" class="form-control" id="createUserModalName" placeholder="Enter name">
                     </div>
                   </div>
                   <div class="form-group displayForm">
                     <label class="control-label label-margin col-sm-2" for="username">Username: </label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="username" placeholder="Enter username">
+                      <input type="text" class="form-control" id="createUserModalUsername" placeholder="Enter username">
                     </div>
                   </div>
                   <div class="form-group displayForm">
                     <label class="control-label label-margin col-sm-2" for="password">Password: </label>
                     <div class="col-sm-10">
-                      <input type="password" class="form-control" id="password" placeholder="Enter password">
+                      <input type="password" class="form-control" id="createUserModalPassword" placeholder="Enter password">
                     </div>
                   </div>
                   <div class="form-group displayForm">
                     <label class="control-label label-margin col-sm-2" for="zone">Zone: </label>
                     <div class="col-sm-10">
-                      <select id="zoneSelect" onchange="getStores(this.value)" name="zoneSelect">
+                      <select id="createUserZoneSelect" onchange="getStores(this.value)" name="zoneSelect">
                       </select>
                     </div>
                   </div>
                   <div class="form-group displayForm">
                     <label class="control-label label-margin col-sm-2" for="store">Store: </label>
                     <div class="col-sm-10">
-                      <select id="storeSelect" onchange="getStoreId(this.value)" name="storeSelect">
+                      <select id="createUserStoreSelect" onchange="getStoreId(this.value)" name="storeSelect">
                       </select>
                     </div>
                   </div>
@@ -100,7 +100,7 @@
                 </form>
               </div>
             </div>
-          </div>     
+          </div>
         </div>
       </div>
 
@@ -115,7 +115,7 @@
             </div>
             <div class="modal-body">
               <div class="container">
-                  <div class="form-group float-right">        
+                  <div class="form-group float-right">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button type="button" onclick="deleteUser(deleteUserId)" class="btn btn-info">Delete</button>
                     </div>
@@ -126,21 +126,57 @@
       </div>
       </div>
    <!-- Assign store modal -->
-      <div class="modal fade" id="assignStoreModal" role="dialog">
+      <div class="modal fade" id="changeUserModal" role="dialog">
         <div class="modal-dialog">
-          <!-- Modal content-->
+
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Assign a new store for the user: <span id="assignStoreUsername"></span> ?</h4>
+              <h4 class="modal-title">Update user with user id - <span id="changeUsername"></span> :</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+
             <div class="modal-body">
               <div class="container">
-                <div class="form-group float-right">
-                  <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" onclick="deleteUser(deleteUserId)" class="btn btn-info">Assign</button>
+                <form class="form-horizontal">
+                  <div class="form-group displayForm">
+                    <label class="control-label label-margin col-sm-2" for="Name">Name: </label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="updateUserName" placeholder="Enter name">
+                    </div>
                   </div>
-                </div>
+                  <div class="form-group displayForm">
+                    <label class="control-label label-margin col-sm-2" for="username">Username: </label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="updateUserUserName" placeholder="Enter username">
+                    </div>
+                  </div>
+                  <div class="form-group displayForm">
+                    <label class="control-label label-margin col-sm-2" for="password">Password: </label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="updateUserPassword" placeholder="Enter password">
+                    </div>
+                  </div>
+                  <!-- <div class="form-group displayForm">
+                    <label class="control-label label-margin col-sm-2" for="zone">Zone: </label>
+                    <div class="col-sm-10">
+                      <select id="updateUserZoneSelect" onchange="getStores(this.value)" name="zoneSelect">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group displayForm">
+                    <label class="control-label label-margin col-sm-2" for="store">Store: </label>
+                    <div class="col-sm-10">
+                      <select id="updateUserStoreSelect" onchange="getStoreId(this.value)" name="storeSelect">
+                      </select>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group float-right">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="button" onclick="updateUser()" class="btn btn-info">Submit</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>

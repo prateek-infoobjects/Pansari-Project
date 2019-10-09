@@ -12,7 +12,7 @@ public interface UserService {
 
     int createUser(String name, String username, String password, int storeid) throws CustomException;
 
-    int updateUser(int userid, String name, String username, String password, int storeid) throws CustomException;
+    int updateUser(int userid, String name, String username, int storeid) throws CustomException;
 
     User updateStoreForUser(int userid, int storeid) throws CustomException;
 
