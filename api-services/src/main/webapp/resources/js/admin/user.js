@@ -56,7 +56,10 @@ function userMethod(userData) {
             userData.store.zone,
         '</td>',
         '<td>',
-            '<button id=" '+userData.userid+'" name="'+userData.name+'" password="'+userData.password+'" storeName="'+userData.store.storeName+'" zone="'+userData.store.zone+'" onclick="createUserId(this.id,this) "  data-id="'+userData.userid+'" class="btn btn-primary btnDel" data-toggle="modal" data-target="#changeUserModal" value="'+userData.username+'"  ><i class="fa fa-user-plus" aria-hidden="true"></i> Assign</button>',
+            '<button id=" '+userData.userid+'" name="'+userData.name+'" password="'+userData.password+'" storeName="'+userData.store.storeName+'" zone="'+userData.store.zone+'" onclick="createUserId(this.id,this) "  data-id="'+userData.userid+'" class="btn btn-primary btnDel" data-toggle="modal" data-target="#changeUserModal" value="'+userData.username+'"  ><i class="fa fa-user-plus" aria-hidden="true"></i> Update User</button>',
+        '</td>',
+        '<td>',
+          '<button id=" '+userData.userid+'" name="'+userData.name+'" password="'+userData.password+'" storeName="'+userData.store.storeName+'" zone="'+userData.store.zone+'" onclick="createUserId(this.id,this) "  data-id="'+userData.userid+'" class="btn btn-primary btnDel" data-toggle="modal" data-target="#changeStoreModal" value="'+userData.username+'"  ><i class="fa fa-user-plus" aria-hidden="true"></i> Update Store</button>',
         '</td>',
         '<td>',
             '<button id=" '+userData.userid+'" onclick="getId(this.id,this.value)"  data-id="'+userData.userid+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+userData.username+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
@@ -71,17 +74,16 @@ function userMethod(userData) {
   var changeUserId
 
   function createUserId(id,button){
-    console.log("createUserId - ",$(button).attr('id'),$(button).attr('zone'));
     changeUserId = id
+    console.log("createUserId - ",id);
     var zone = $(button).attr('zone')
-    $('#changeUsername').text(id)
+    $('.changeUsername').text(id)
     $('#updateUserName').val($(button).attr('name'))
     $('#updateUserUserName').val($(button).attr('value'))
     $('#updateUserPassword').val($(button).attr('password'))
     $('#updateUserZoneSelect').val('Zone')
     $('#updateUserStoreSelect').val($(button).attr('storeName'))
     getZones()
-    getStores(zone,'updateUserStoreSelect')
   }
 
   var deleteUserId
@@ -105,15 +107,14 @@ function userMethod(userData) {
           }
         }).then(function(data) {
         hideLoader()
-         // Get select
-         var select = document.getElementById('createUserZoneSelect');
-         // Add options
-         for (var i in data) {
-           $(select).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
-         }
-         // Set selected value
-         $(select).val(data[1]);
-      document.getElementById('createUserZoneSelect').selectedIndex = -1;
+        var select = document.getElementById('createUserZoneSelect');
+        var updateSelect = document.getElementById('updateUserZoneSelect');
+        for (var i in data) {
+          $(select).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
+          $(updateSelect).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
+        }
+        document.getElementById('createUserZoneSelect').selectedIndex = -1;
+        document.getElementById('updateUserZoneSelect').selectedIndex = -1;
     },function(error){
       hideLoader()
       alert(error.statusText)
@@ -134,22 +135,22 @@ function userMethod(userData) {
           }
         }).then(function(data) {
         hideLoader()
-        // Get select
         var select = document.getElementById('createUserStoreSelect');
-        // Add options
+        var updateSelect = document.getElementById('updateUserStoreSelect');
         for (var i in data) {
           $(select).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
+          $(updateSelect).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
         }
-        // Set selected value
-        $(select).val(data[1]);
+        document.getElementById('createUserStoreSelect').selectedIndex = -1;
+        document.getElementById('updateUserStoreSelect').selectedIndex = -1;
     },function(error){
       hideLoader()
       alert(error.statusText)
     });
   }
-  var storeId
+  var changeStoreId
   function getStoreId(id){
-    storeId = id
+    changeStoreId = id
   }
 
   function createUser(){
@@ -165,7 +166,7 @@ function userMethod(userData) {
           "username":username,
           "name":name,
           "password" : password,
-          "storeid" : storeId,
+          "storeid" : changeStoreId,
         }),
         contentType: 'application/json',
         "headers": {
@@ -180,26 +181,24 @@ function userMethod(userData) {
     },function(error){
       hideLoader()
       alert(error.statusText)
-      // $('#modalBody').val(error.statusText)
       console.log("err",error)
     });
   }
 
-  function updateUser(id){
+  function updateUser(){
     showLoader()
     var name = $('#updateUserName').val()
     var username = $('#updateUserUserName').val()
     var password = $('#updateUserPassword').val()
-    var storeid = $('#updateUserStoreSelect').val()
-    console.log("testing update user--",name,username,password,storeid)
+    console.log("testing",changeUserId,name,username,password)
     $.ajax({
       url: fqdn+"/users/update",
       type: "PUT",
       data:  JSON.stringify({
+        "userid" : changeUserId,
         "username":username,
         "name":name,
         "password" : password,
-        "storeid" : storeid,
       }),
       contentType: 'application/json',
       "headers": {
@@ -207,15 +206,43 @@ function userMethod(userData) {
         "Access-Control-Allow-Origin":"*"
       }
     }).then(function(data) {
-      alert("User deleted successfully")
       hideLoader()
+      alert("User updated successfully")
       $('#changeUserModal').modal('toggle');
       getUsers()
   },function(error){
       hideLoader()
       alert(error.statusText)
       console.log("err",error)
-      // $('#changeUserModal').modal('toggle');
+      getUsers()
+    });
+  }
+
+  function updateStore(){
+    showLoader()
+    var userid = $('.changeUsername').text()
+    console.log(userid,changeStoreId)
+    $.ajax({
+      url: fqdn+"/users/update",
+      type: "PUT",
+      data:  JSON.stringify({
+        "userid":userid,
+        "storeid" : changeStoreId,
+      }),
+      contentType: 'application/json',
+      "headers": {
+        "accept": "application/json",
+        "Access-Control-Allow-Origin":"*"
+      }
+    }).then(function(data) {
+      hideLoader()
+      alert("Store updated successfully")
+      $('#changeStoreModal').modal('toggle');
+      getUsers()
+  },function(error){
+      hideLoader()
+      alert(error.statusText)
+      console.log("err",error)
       getUsers()
     });
   }
@@ -234,7 +261,6 @@ function userMethod(userData) {
         hideLoader()
         alert(error.statusText)
         console.log("err",error)
-        // $('#deleteModal').modal('toggle');
         getUsers()
       });
   }
