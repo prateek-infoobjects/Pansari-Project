@@ -27,6 +27,17 @@ async function getUsers() {
         });
     },function(error){
       hideLoader()
+
+      data = [{userid : 12,name : "name",username : "User name",store :{storeName : "Store Name",zone : " zone"}}]
+      var users = $();
+      data.forEach(function(item, i) {
+      users = users.add(userMethod(item));
+      });
+      $("#user_table_id tbody").empty();
+      $(function() {
+      $('#tbody').append(users);
+      });
+
       console.log("err",error)
     });
     $('#user_table_id').DataTable();
@@ -59,7 +70,7 @@ function userMethod(userData) {
             '<button id=" '+userData.userid+'" name="'+userData.name+'" password="'+userData.password+'" storeName="'+userData.store.storeName+'" zone="'+userData.store.zone+'" onclick="createUserId(this.id,this) "  data-id="'+userData.userid+'" class="btn btn-primary btnDel" data-toggle="modal" data-target="#changeUserModal" value="'+userData.username+'"  ><i class="fa fa-user-plus" aria-hidden="true"></i> Update User</button>',
         '</td>',
         '<td>',
-          '<button id=" '+userData.userid+'" name="'+userData.name+'" password="'+userData.password+'" storeName="'+userData.store.storeName+'" zone="'+userData.store.zone+'" onclick="createUserId(this.id,this) "  data-id="'+userData.userid+'" class="btn btn-primary btnDel" data-toggle="modal" data-target="#changeStoreModal" value="'+userData.username+'"  ><i class="fa fa-user-plus" aria-hidden="true"></i> Update Store</button>',
+          '<button id=" '+userData.userid+'" name="'+userData.name+'" password="'+userData.password+'" storeName="'+userData.store.storeName+'" zone="'+userData.store.zone+'" onclick="createUserStoreId(this.id,this) "  data-id="'+userData.userid+'" class="btn btn-primary btnDel" data-toggle="modal" data-target="#changeStoreModal" value="'+userData.username+'"  ><i class="fa fa-user-plus" aria-hidden="true"></i> Update Store</button>',
         '</td>',
         '<td>',
             '<button id=" '+userData.userid+'" onclick="getId(this.id,this.value)"  data-id="'+userData.userid+'" class="btn btn-danger btnDel" data-toggle="modal" data-target="#deleteModal" value="'+userData.username+'"  ><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>',
@@ -76,11 +87,16 @@ function userMethod(userData) {
   function createUserId(id,button){
     changeUserId = id
     console.log("createUserId - ",id);
-    var zone = $(button).attr('zone')
     $('.changeUsername').text(id)
     $('#updateUserName').val($(button).attr('name'))
     $('#updateUserUserName').val($(button).attr('value'))
     $('#updateUserPassword').val($(button).attr('password'))
+  }
+
+  function createUserStoreId(id,button){
+    changeUserId = id
+    console.log("createUserStoreId - ",id);
+    $('.changeUsername').text(id)
     $('#updateUserZoneSelect').val('Zone')
     $('#updateUserStoreSelect').val($(button).attr('storeName'))
     getZones()
@@ -117,6 +133,17 @@ function userMethod(userData) {
         document.getElementById('updateUserZoneSelect').selectedIndex = -1;
     },function(error){
       hideLoader()
+
+      data = ["aasd","asd","sfgs"]
+      var select = document.getElementById('createUserZoneSelect');
+      var updateSelect = document.getElementById('updateUserZoneSelect');
+      for (var i in data) {
+      $(select).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
+      $(updateSelect).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
+      }
+      document.getElementById('createUserZoneSelect').selectedIndex = -1;
+      document.getElementById('updateUserZoneSelect').selectedIndex = -1;
+
       alert(error.statusText)
     });
   }
@@ -145,6 +172,17 @@ function userMethod(userData) {
         document.getElementById('updateUserStoreSelect').selectedIndex = -1;
     },function(error){
       hideLoader()
+
+      data = [{storeId : 1,storeName : "Name Of store"},{storeId : 2,storeName : " stores names"}]
+      var select = document.getElementById('createUserStoreSelect');
+      var updateSelect = document.getElementById('updateUserStoreSelect');
+      for (var i in data) {
+      $(select).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
+      $(updateSelect).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
+      }
+      document.getElementById('createUserStoreSelect').selectedIndex = -1;
+      document.getElementById('updateUserStoreSelect').selectedIndex = -1;
+
       alert(error.statusText)
     });
   }
@@ -190,7 +228,6 @@ function userMethod(userData) {
     var name = $('#updateUserName').val()
     var username = $('#updateUserUserName').val()
     var password = $('#updateUserPassword').val()
-    console.log("testing",changeUserId,name,username,password)
     $.ajax({
       url: fqdn+"/users/update",
       type: "PUT",
@@ -220,13 +257,11 @@ function userMethod(userData) {
 
   function updateStore(){
     showLoader()
-    var userid = $('.changeUsername').text()
-    console.log(userid,changeStoreId)
     $.ajax({
-      url: fqdn+"/users/update",
+      url: fqdn+"/users/updatestore",
       type: "PUT",
       data:  JSON.stringify({
-        "userid":userid,
+        "userid":changeUserId,
         "storeid" : changeStoreId,
       }),
       contentType: 'application/json',
