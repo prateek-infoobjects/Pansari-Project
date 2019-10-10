@@ -27,17 +27,6 @@ async function getUsers() {
         });
     },function(error){
       hideLoader()
-
-      data = [{userid : 12,name : "name",username : "User name",store :{storeName : "Store Name",zone : " zone"}}]
-      var users = $();
-      data.forEach(function(item, i) {
-      users = users.add(userMethod(item));
-      });
-      $("#user_table_id tbody").empty();
-      $(function() {
-      $('#tbody').append(users);
-      });
-
       console.log("err",error)
     });
     $('#user_table_id').DataTable();
@@ -133,17 +122,7 @@ function userMethod(userData) {
         document.getElementById('updateUserZoneSelect').selectedIndex = -1;
     },function(error){
       hideLoader()
-
-      data = ["aasd","asd","sfgs"]
-      var select = document.getElementById('createUserZoneSelect');
-      var updateSelect = document.getElementById('updateUserZoneSelect');
-      for (var i in data) {
-      $(select).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
-      $(updateSelect).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
-      }
-      document.getElementById('createUserZoneSelect').selectedIndex = -1;
-      document.getElementById('updateUserZoneSelect').selectedIndex = -1;
-
+      console.log("err",error)
       alert(error.statusText)
     });
   }
@@ -172,17 +151,7 @@ function userMethod(userData) {
         document.getElementById('updateUserStoreSelect').selectedIndex = -1;
     },function(error){
       hideLoader()
-
-      data = [{storeId : 1,storeName : "Name Of store"},{storeId : 2,storeName : " stores names"}]
-      var select = document.getElementById('createUserStoreSelect');
-      var updateSelect = document.getElementById('updateUserStoreSelect');
-      for (var i in data) {
-      $(select).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
-      $(updateSelect).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
-      }
-      document.getElementById('createUserStoreSelect').selectedIndex = -1;
-      document.getElementById('updateUserStoreSelect').selectedIndex = -1;
-
+      console.log("err",error)
       alert(error.statusText)
     });
   }
@@ -251,7 +220,6 @@ function userMethod(userData) {
       hideLoader()
       alert(error.statusText)
       console.log("err",error)
-      getUsers()
     });
   }
 
@@ -278,7 +246,6 @@ function userMethod(userData) {
       hideLoader()
       alert(error.statusText)
       console.log("err",error)
-      getUsers()
     });
   }
 
@@ -296,11 +263,11 @@ function userMethod(userData) {
         hideLoader()
         alert(error.statusText)
         console.log("err",error)
-        getUsers()
       });
   }
 
   $(document).ready( function () {
+    getUsers()
     $('#user_table_id tbody').DataTable();
     $("#user_table_id").ajax.reload();
   } );
