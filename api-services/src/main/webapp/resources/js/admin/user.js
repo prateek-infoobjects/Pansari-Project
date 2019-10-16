@@ -2,6 +2,7 @@
 var fqdn="http://localhost:8080"
 
 async function getUsers() {
+  console.log("get users called")
   $(".user tr>td").remove();
     //TODO: clear the table here so as not to have duplicate in table after creation
     var data = []
@@ -124,6 +125,7 @@ function userMethod(userData) {
       hideLoader()
       console.log("err",error)
       alert(error.statusText)
+      
     });
   }
 
@@ -188,6 +190,7 @@ function userMethod(userData) {
     },function(error){
       hideLoader()
       alert(error.statusText)
+      location.reload(); 
       console.log("err",error)
     });
   }
@@ -219,6 +222,7 @@ function userMethod(userData) {
   },function(error){
       hideLoader()
       alert(error.statusText)
+      location.reload(); 
       console.log("err",error)
     });
   }
@@ -240,11 +244,12 @@ function userMethod(userData) {
     }).then(function(data) {
       hideLoader()
       alert("Store updated successfully")
-      $('#changeStoreModal').modal('toggle');
+      $('#changeStoreModal').modal('toggle'); 
       getUsers()
   },function(error){
       hideLoader()
       alert(error.statusText)
+      location.reload();
       console.log("err",error)
     });
   }
@@ -267,6 +272,7 @@ function userMethod(userData) {
   }
 
   $(document).ready( function () {
+    console.log("testing user")
     getUsers()
     $('#user_table_id tbody').DataTable();
     $("#user_table_id").ajax.reload();
