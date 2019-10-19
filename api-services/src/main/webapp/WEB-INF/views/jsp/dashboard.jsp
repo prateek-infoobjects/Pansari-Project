@@ -23,6 +23,7 @@
 								<!-- Page level plugin CSS-->
 								<link href="resources/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
+
 									<!-- Custom styles for this template-->
 									<link href="resources/css/sb-admin.css" rel="stylesheet">
 										<script data-require="jquery@3.2.1" data-semver="3.2.1" src="resources/vendor/jquery/jquery.m.js"></script>

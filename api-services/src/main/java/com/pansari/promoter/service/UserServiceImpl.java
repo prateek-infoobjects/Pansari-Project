@@ -50,18 +50,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public int updateUser(int userid, String name, String username, int storeid) throws CustomException {
+    public int updateUser(int userid, String name, String username,  String password) throws CustomException {
         User user = userDao.getUserById(userid);
         if (user == null) {
             logger.warning("User doesn't exists");
             throw new CustomException(400, "Wrong user id received");
         }
-        Store store = storeDao.getStoreById(storeid);
-        if (store == null) {
-            logger.warning("Store doesn't exists");
-            throw new CustomException(400, "Wrong store id received");
-        }
-        return userDao.updateUser(user, name, username, store);
+        
+        return userDao.updateUser(user, name, username, password);
     }
 
     @Override

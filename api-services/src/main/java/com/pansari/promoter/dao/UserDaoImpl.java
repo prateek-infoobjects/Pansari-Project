@@ -72,11 +72,12 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public int updateUser(User user, String name, String username, Store store) {
+    public int updateUser(User user, String name, String username, String password) {
         Session session = getSession();
         user.setName(name);
         user.setUsername(username);
-        user.setStore(store);
+        user.setPassword(password);
+
         try{
             session.update(user);
         } catch (HibernateException ex) {

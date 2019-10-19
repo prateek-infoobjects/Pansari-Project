@@ -1,32 +1,45 @@
 package com.pansari.promoter.config;
 
-import com.pansari.promoter.controller.RealtimeController;
-import com.pansari.promoter.converter.SalesToAttendanceDtoConverter;
-import com.pansari.promoter.dto.AttendanceDto;
-import com.pansari.promoter.entity.Sales;
-import com.pansari.promoter.service.SalesService;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.mail.MessagingException;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.*;
-import java.util.logging.Logger;
+import com.pansari.promoter.controller.RealtimeController;
+import com.pansari.promoter.converter.SalesToAttendanceDtoConverter;
+import com.pansari.promoter.dto.AttendanceDto;
+import com.pansari.promoter.entity.Sales;
+import com.pansari.promoter.service.SalesService;
 
 @Component
 public class ScheduledTasks {
 
 
-    private static final Logger logger = Logger.getLogger(RealtimeController.class.getName());
+    private static final Logger logger = Logger.getLogger(ScheduledTasks.class.getName());
 
     private static final SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
 
@@ -42,12 +55,9 @@ public class ScheduledTasks {
 
     @Autowired
     EmailSender emailSender;
-
-
-
-//    @Scheduled(fixedRate = 600000)
-    public void reportCurrentTime() throws MessagingException {
-        Set<String> dates = new HashSet<>();
+    
+    private void createAttendanceReport() throws AddressException, MessagingException {
+    	Set<String> dates = new HashSet<>();
         Date date = new Date();
 
         for(int i = 1; i<=7; i++)
@@ -60,13 +70,51 @@ public class ScheduledTasks {
 
         List<Object[]> rows = salesService.getSalesByDatesNatively(dates);
 //        List<Sales> sales = salesService.getSalesByDates();
-        Set<AttendanceDto> attendanceDtos = salesToAttendanceDtoConverter.convertToAttendanceDtoForRows(rows);
+        List<AttendanceDto> attendanceDtos = salesToAttendanceDtoConverter.convertToAttendanceDtoForRows(rows);
         byte[] report = pdfCreator.createAttendancePdf("Attendance on " + formatter.format(new Date()), attendanceDtos);
         String fileName = formatter.format(new Date())+".xlsx";
         writeByte(report, fileName);
-        emailSender.sendEmail(fileName);
+        EmailSender.sendEmail(fileName, report);
+    }
+    
+    private void createShortStockReport() throws AddressException, MessagingException {
+    	Date date = new Date();       
+        List<Sales> sales = salesService.getSalesByDate(formatter.format(date));
+        
+        byte[] reportBytes = pdfCreator.createShortStockPdf("Short Stock on " + formatter.format(date), sales);
+        String fileName = "ShortStockReport-"+formatter.format(date)+".xlsx";
+//        writeByte(report, fileName);
+        EmailSender.sendEmail(fileName, reportBytes);
     }
 
+
+//    @Scheduled(fixedRate = 600000)
+    public void scheduledAttendanceReport() {
+    	try {
+			createAttendanceReport();
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+    }
+    
+    @Scheduled(cron = "0 0 22 * * ?", zone="IST")
+    public void scheduledShortStockReport() {
+		try {
+			createShortStockReport();
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	  
+	}
+	
     // Method which write the bytes into a file
     static void writeByte(byte[] bytes, String fileName) {
         File file = new File(fileName);
@@ -80,13 +128,13 @@ public class ScheduledTasks {
 
             // Starts writing the bytes in it
             os.write(bytes);
-            System.out.println("Successfully"
+            logger.info(fileName+" - Successfully"
                     + " report created");
 
             // Close the file
             os.close();
         } catch (Exception e) {
-            System.out.println("Exception: " + e);
+        	logger.warning("Exception: " + e);
         }
     }
 
@@ -148,7 +196,7 @@ public class ScheduledTasks {
         System.exit(0);
 
 
-        Workbook workbook = createAttendanceReport();
+        Workbook workbook = createAttendanceReportWorkbook();
 
         File currDir = new File(".");
         String path = currDir.getAbsolutePath();
@@ -164,14 +212,14 @@ public class ScheduledTasks {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            EmailSender.sendEmail(fileLocation);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            EmailSender.sendEmail(fileLocation);
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//        }
     }
 
-    private static Workbook createAttendanceReport() {
+    private static Workbook createAttendanceReportWorkbook() {
         Workbook workbook = new XSSFWorkbook();
 
         Sheet sheet = workbook.createSheet("Persons");

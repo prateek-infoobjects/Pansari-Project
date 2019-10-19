@@ -8,6 +8,10 @@
     Allows App Engine to send multiple requests to one instance in parallel:
   -->
     <threadsafe>true</threadsafe>
+     <env-variables>
+    <env-var name="SENDGRID_API_KEY" value="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" />
+    <env-var name="SENDGRID_SENDER" value="agarwal.prateek10@gmail.com" />
+  </env-variables>
 
     <!-- Configure java.util.logging -->
     <system-properties>

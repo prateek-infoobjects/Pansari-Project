@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -46,9 +47,9 @@ public class SalesToAttendanceDtoConverter {
     }
 
 
-    public Set<AttendanceDto> convertToAttendanceDtoForRows(List<Object[]> rows)
+    public List<AttendanceDto> convertToAttendanceDtoForRows(List<Object[]> rows)
     {
-        Set<AttendanceDto> attendances= new HashSet<AttendanceDto>();
+        List<AttendanceDto> attendances= new ArrayList<AttendanceDto>();
         AttendanceDto attendance=null;
 
         for(Object[] row : rows){

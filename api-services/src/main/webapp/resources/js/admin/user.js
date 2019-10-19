@@ -1,5 +1,21 @@
-//var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
-var fqdn="http://localhost:8080"
+var fqdn="https://pansari-promoter-api-dot-pansari-promoter-app.appspot.com"
+// var fqdn="http://localhost:8080"
+
+var zoneCheck = true
+
+// document.getElementById('zoneBox').onchange = function() {
+//   document.getElementById('zoneText').disabled = !this.checked;
+// };
+// document.getElementById('storeBox').onchange = function() {
+//   document.getElementById('storeText').disabled = !this.checked;
+// };
+// $("#createUserZoneSelect").chosen({
+//   placeholder_text:"my custom placeholder text"
+// });
+
+$("#createUserZoneSelect")
+    .attr("data-placeholder", "No Options")
+    .trigger("chosen:updated");
 
 async function getUsers() {
   console.log("get users called")
@@ -28,6 +44,18 @@ async function getUsers() {
         });
     },function(error){
       hideLoader()
+
+      data = [{userid : 12,name : "name",username : "User name",store :{storeName : "Store Name",zone : " zone"}}]
+      var users = $();
+      data.forEach(function(item, i) {
+      users = users.add(userMethod(item));
+      });
+      $("#user_table_id tbody").empty();
+      $(function() {
+      $('#tbody').append(users);
+      });
+
+
       console.log("err",error)
     });
     $('#user_table_id').DataTable();
@@ -99,6 +127,9 @@ function userMethod(userData) {
     $('#deleteUserName').text(value)
   }
 
+
+
+
   function getZones(){
     console.log("calling get zones");
     showLoader()
@@ -119,12 +150,24 @@ function userMethod(userData) {
           $(select).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
           $(updateSelect).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
         }
-        document.getElementById('createUserZoneSelect').selectedIndex = -1;
-        document.getElementById('updateUserZoneSelect').selectedIndex = -1;
+        document.getElementById('createUserZoneSelect').selectedIndex = 0;
+        document.getElementById('updateUserZoneSelect').selectedIndex = 0;
     },function(error){
       hideLoader()
+
+      data = ["aasd","asd","sfgs"]
+      var select = document.getElementById('createUserZoneSelect');
+      var updateSelect = document.getElementById('updateUserZoneSelect');
+
+      for (var i in data) {
+      $(select).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
+      $(updateSelect).append('<option class="zone" value=' + data[i] + '>' + data[i] + '</option>');
+      }
+      document.getElementById('createUserZoneSelect').selectedIndex = 0;
+      document.getElementById('updateUserZoneSelect').selectedIndex = 0;
+
       console.log("err",error)
-      alert(error.statusText)
+      // alert(error.statusText)
       
     });
   }
@@ -149,10 +192,22 @@ function userMethod(userData) {
           $(select).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
           $(updateSelect).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
         }
-        document.getElementById('createUserStoreSelect').selectedIndex = -1;
-        document.getElementById('updateUserStoreSelect').selectedIndex = -1;
+        document.getElementById('createUserStoreSelect').selectedIndex = 0;
+        document.getElementById('updateUserStoreSelect').selectedIndex = 0;
     },function(error){
       hideLoader()
+
+      data = [{storeId : 1,storeName : "Name Of store"},{storeId : 2,storeName : " stores names"}]
+      var select = document.getElementById('createUserStoreSelect');
+      var updateSelect = document.getElementById('updateUserStoreSelect');
+      
+      for (var i in data) {
+      $(select).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
+      $(updateSelect).append('<option class="store" value=' + data[i].storeId + '>' + data[i].storeName + '</option>');
+      }
+      document.getElementById('createUserStoreSelect').selectedIndex = 0;
+      document.getElementById('updateUserStoreSelect').selectedIndex = 0;
+
       console.log("err",error)
       alert(error.statusText)
     });
@@ -183,14 +238,15 @@ function userMethod(userData) {
           "Access-Control-Allow-Origin":"*"
         }
       }).then(function(data) {
-        alert("User added successfully")
         hideLoader()
+        alert("User added successfully")
+        location.reload();
         $('#createUserModal').modal('toggle');
         getUsers()
     },function(error){
       hideLoader()
       alert(error.statusText)
-      location.reload(); 
+      // location.reload(); 
       console.log("err",error)
     });
   }
@@ -217,12 +273,13 @@ function userMethod(userData) {
     }).then(function(data) {
       hideLoader()
       alert("User updated successfully")
+      location.reload();
       $('#changeUserModal').modal('toggle');
       getUsers()
   },function(error){
       hideLoader()
       alert(error.statusText)
-      location.reload(); 
+      // location.reload(); 
       console.log("err",error)
     });
   }
@@ -244,13 +301,14 @@ function userMethod(userData) {
     }).then(function(data) {
       hideLoader()
       alert("Store updated successfully")
+      location.reload();
       $('#changeStoreModal').modal('toggle'); 
       getUsers()
   },function(error){
       hideLoader()
       alert(error.statusText)
-      location.reload();
-      console.log("err",error)
+      // location.reload();
+      console.log("err update store",error)
     });
   }
 
@@ -272,8 +330,9 @@ function userMethod(userData) {
   }
 
   $(document).ready( function () {
+    
     console.log("testing user")
-    getUsers()
+    // getUsers()
     $('#user_table_id tbody').DataTable();
     $("#user_table_id").ajax.reload();
   } );

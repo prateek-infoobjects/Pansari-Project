@@ -10,7 +10,9 @@ public interface SalesService {
 
     void createSale(SalesDto salesDto) throws Exception;
 
-    List<Sales> getSalesByDates();
+    List<Sales> getSales();
 
      List<Object[]> getSalesByDatesNatively(Set<String> dates) ;
+
+	List<Sales> getSalesByDate(String datestamp);
 }

@@ -92,7 +92,7 @@ public class SalesServiceImpl implements SalesService {
 
     @Override
     @Transactional
-    public List<Sales> getSalesByDates() {
+    public List<Sales> getSales() {
         List<Sales> sales = salesDao.fetchSales();
         return sales;
     }
@@ -100,6 +100,12 @@ public class SalesServiceImpl implements SalesService {
     @Transactional
     public List<Object[]> getSalesByDatesNatively(Set<String> dates) {
         return salesDao.fetchSalesByNative(dates);
+    }
+    
+    @Override
+    @Transactional
+    public List<Sales> getSalesByDate(String datestamp) {
+        return salesDao.fetchSalesForDate(datestamp);
     }
 
 

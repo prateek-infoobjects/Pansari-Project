@@ -13,4 +13,6 @@ public interface SalesDao {
 
  List<Object[]> fetchSalesByNative(Set<String> dates);
 
+List<Sales> fetchSalesForDate(String datestamp);
+
 }

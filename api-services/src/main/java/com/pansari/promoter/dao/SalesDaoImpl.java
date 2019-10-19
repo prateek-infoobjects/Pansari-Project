@@ -26,14 +26,23 @@ public class SalesDaoImpl extends AbstractDao implements SalesDao {
     @Override
     public List<Sales> fetchSales() {
         Criteria criteria = getSession().createCriteria(Sales.class);
-
-//        criteria.add(Restrictions.eq("selectedDate", "2019-08-01"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         criteria.setMaxResults(5);
         List<Sales> l = criteria.list();
         return l;
     }
 
+
+    @Override
+    public List<Sales> fetchSalesForDate(String datestamp) {
+        Criteria criteria = getSession().createCriteria(Sales.class);
+        criteria.add(Restrictions.eq("selectedDate", datestamp));
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.setMaxResults(5);
+        List<Sales> l = criteria.list();
+        return l;
+    }
+    
     @Override
     public List<Object[]> fetchSalesByNative(Set<String> dates) {
         Session session = getSession();
@@ -47,4 +56,5 @@ public class SalesDaoImpl extends AbstractDao implements SalesDao {
         List<Object[]> rows = query.list();
         return rows;
     }
+    
 }

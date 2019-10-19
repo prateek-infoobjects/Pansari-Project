@@ -71,14 +71,14 @@ public class UserController {
     @RequestMapping(value = "/users/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity updateUser(@RequestBody UserUpdateDto userUpdateDto) throws CustomException {
-        if (userUpdateDto.getUsername().isEmpty() || userUpdateDto.getName().isEmpty()) {
+        if (userUpdateDto.getUsername().isEmpty() || userUpdateDto.getName().isEmpty() || userUpdateDto.getPassword().isEmpty()) {
             logger.severe("Name/username/password is invalid");
-            return new ResponseEntity<CustomException>(new CustomException("Name/username is invalid"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<CustomException>(new CustomException("Name/username/password is invalid"), HttpStatus.BAD_REQUEST);
         }
         int userId;
         try {
             userId = userService.updateUser(userUpdateDto.getUserid(), userUpdateDto.getName(),
-                    userUpdateDto.getUsername(), userUpdateDto.getStoreid());
+                    userUpdateDto.getUsername(), userUpdateDto.getPassword());
             logger.info("User with name - " +userUpdateDto.getName().trim() + " updated for id - "+ userId);
         } catch (Exception e) {
             e.printStackTrace();

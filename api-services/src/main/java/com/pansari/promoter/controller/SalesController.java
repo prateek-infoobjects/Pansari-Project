@@ -54,7 +54,7 @@ public class SalesController {
     ResponseEntity getSales() {
         logger.info("fetch sales");
         try {
-            List<Sales> sales = salesService.getSalesByDates();
+            List<Sales> sales = salesService.getSales();
             logger.info(String.valueOf(sales.size()));
             return new ResponseEntity<>(sales, HttpStatus.OK);
         } catch (Exception e) {
